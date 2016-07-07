@@ -1,4 +1,5 @@
 ﻿
+@model List<DAL.Models.Items>
 @{
     Layout = null;
 }
@@ -7,12 +8,41 @@
 
 <html>
 <head>
+    <script src="~/scripts/bootstrap.min.js"></script>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
 </head>
-<body>
-    <div> 
-        <h1>Wellcome to Mvc</h1>
-    </div>
-</body>
+@using (Html.BeginForm("Buy", "Shop", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <body>
+        <div class="container">
+            <div class="jumbotron">
+                <h1>Wellcome Shop Center</h1>  <input type="submit" value="Buy Selected Items"/>
+            </div>           
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Add Basket</th>
+                        <th>Picture</th>
+                        <th>Price</th>
+                        <th>Product</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                {
+                        <tr class="info">
+                            <td><input type="checkbox" name="@item.id" id="@item.id" value="@item.id" /></td>
+                            <td><img src="~/Images/@item.Image" width="200" height="100" /></td>
+                            <td><b>@item.Price</b></td>
+                            <td><b>@item.Name</b></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </body>
+}
 </html>

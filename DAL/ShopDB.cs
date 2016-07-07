@@ -17,12 +17,13 @@ namespace DAL
         public ShopDB()
             : base("name=ShopDB")
         {
+            Database.SetInitializer(new Configuration());
         }
         public virtual DbSet<Shop> Shop { get; set; }
         public virtual DbSet<User> User { get; set; }
         public virtual DbSet<Items> Items { get; set; }
     }
-    internal sealed class Configuration : CreateDatabaseIfNotExists<ShopDB>
+    public class Configuration : CreateDatabaseIfNotExists<ShopDB>
     {
         protected override void Seed(ShopDB context)
         {
@@ -32,8 +33,9 @@ namespace DAL
                 Surname = "Kasmer"
             });
             context.Items.AddRange(new Items[]{
-                new Items() {Image="",Name="Xbox",Price=1000},
-                new Items() {Image="",Name="Ps4",Price=1200},
+                new Items() {Image="xbox.jpg",Name="XboxOne",Price=1000},
+                new Items() {Image="ps4.jpg",Name="Ps4",Price=1200},
+                new Items() {Image="Holo.jpg",Name="HoloLens",Price=4000}
             });
 
             context.SaveChanges();
